@@ -143,6 +143,17 @@ function printFailure($message = "none"){
     echo json_encode(array("status" => "failure","message"=>$message));
 }
 
+function printSuccess($message = "none"){
+    echo json_encode(array("status" => "success","message"=>$message));
+}
+
+function result($count,$messageSuccess,$messageFailure){
+    if($count>0){
+        printSuccess($messageSuccess);
+    }else{
+        printFailure($messageFailure);
+    }
+}
 function sendEmail($to,$title,$body){
 $header = "from: support@ibtissamwannas.com"."\n"."cc: ibtissam123@gmail.com";
 

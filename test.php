@@ -25,6 +25,6 @@ include "./connect.php";
 // sendEmail("ibtissamwannas21@gmail.com","hi","from function");
 
 getAllData(
-    "users","1 = 1"
+    "users"," 1 = 1"
 );
 ?>

@@ -3,7 +3,7 @@ include "../connect.php";
 
 $username = filterRequest("username");
 $email = filterRequest("email");
-$password = filterRequest("password");
+$password = sha1($_POST["password"]);
 $phone = filterRequest("phone");
 $verifyCode = rand(10000,99999);
 
