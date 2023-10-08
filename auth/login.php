@@ -10,5 +10,5 @@ $password = sha1($_POST["password"]);
 // $count = $stmt->rowCount();
 // result($count,"none","email or password are not correct");
 // same func
-getData("users","users_email = ? AND users_password = ? AND users_approve = 1",array($email,$password));
+getData("users","users_email = ? AND users_password = ?",array($email,$password));
 ?>

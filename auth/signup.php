@@ -20,7 +20,7 @@ if($count>0){
         "users_phone"=>$phone,
         "users_verify_code"=>$verifyCode,
     );
-    sendEmail($email,"verifyCode","verify Code = $verifycode");
+    sendEmail($email,"verifyCode","verify Code = $verifyCode");
     insertData("users",$data);
 }
 ?>
