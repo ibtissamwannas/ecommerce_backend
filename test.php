@@ -1,5 +1,6 @@
 <?php
-include "./connect.php";
+
+include './connect.php';
 //
 // $table = "users";
 
@@ -11,7 +12,6 @@ include "./connect.php";
 // );
 // $count = insertData($table, $data);
 
-
 //
 // $to = "ibtissamwannas21@gmail.com";
 // $title = "hi";
@@ -20,11 +20,10 @@ include "./connect.php";
 
 // mail($to,$title,$body,$header);
 
-
 //
 // sendEmail("ibtissamwannas21@gmail.com","hi","from function");
 
-getAllData(
-    "users"," 1 = 1"
-);
-?>
+// getAllData(
+//     "users"," 1 = 1"
+// );
+sendGCM('sam', 'hello man', 'users', '', '');

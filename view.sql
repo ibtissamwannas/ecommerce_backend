@@ -19,5 +19,32 @@ FROM
   cart 
 INNER JOIN 
   items ON items.item_id = cart.cart_itemid
+WHERE card_orders = 0
 GROUP BY 
  cart.cart_userid, cart.cart_itemid
+
+ CREATE or REPLACE VIEW orderView as 
+SELECT 
+  orders.*,address.*
+FROM 
+  orders 
+LEFT JOIN 
+  address ON address.address_id = orders.orders_address
+
+
+CREATE or REPLACE VIEW orderDetails as 
+SELECT 
+  cart.cart_userid,
+  cart.cart_itemid,
+  cart.card_orders
+  items.*,
+  COUNT(*) as countitems,
+  SUM(items.item_price - (items.item_price * items.item_discount / 100)) as itemsprice,
+  orderView.*
+FROM 
+  cart 
+INNER JOIN 
+  items ON items.item_id = cart.cart_itemid
+WHERE card_orders != 0
+GROUP BY 
+ cart.cart_userid, cart.cart_itemid, cart.card_orders

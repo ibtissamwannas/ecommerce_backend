@@ -97,10 +97,12 @@ function updateData($table, $data, $where, $json = true)
     $stmt = $con->prepare($sql);
     $stmt->execute($vals);
     $count = $stmt->rowCount();
+
     if ($json == true) {
         if ($count > 0) {
             echo json_encode(['status' => 'success']);
         } else {
+            print_r($count);
             echo json_encode(['status' => 'failure']);
         }
     }
@@ -195,4 +197,56 @@ function sendEmail($to, $title, $body)
     $header = 'from: support@ibtissamwannas.com'."\n".'cc: ibtissam123@gmail.com';
 
     mail($to, $title, $body, $header);
+}
+
+function sendGCM($title, $message, $topic, $pageid, $pagename)
+{
+    $url = 'https://fcm.googleapis.com/fcm/send';
+
+    $fields = [
+        'to' => '/topics/'.$topic,
+        'priority' => 'high',
+        'content_available' => true,
+
+        'notification' => [
+            'body' => $message,
+            'title' => $title,
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'sound' => 'default',
+        ],
+        'data' => [
+            'pageid' => $pageid,
+            'pagename' => $pagename,
+        ],
+    ];
+
+    $fields = json_encode($fields);
+    $headers = [
+        'Authorization: key=AAAA7nvBiuQ:APA91bHt3v_7PqruabjyQtpREvtdu8fGkBHRjmWESzx___iyCPUwLYmJ_yEiOH3l5m6mb99-OrabNaUMWm7Aa2oBPJilCVuk3sHHFLJ41udZIxBjDwrxTSFYv0FaEoPHIacJDRqWHz2v',
+        'Content-Type: application/json',
+    ];
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+
+    $result = curl_exec($ch);
+
+    return $result;
+    curl_close($ch);
+}
+
+function insertNotify($userId, $title, $body, $topic, $pageid, $pageName)
+{
+    global $con;
+    $stmt = $con->prepare('INSERT INTO `notification`(`title`, `body`, `user_id`) VALUES (?,?,?)');
+    $stmt->execute([$title, $body, $userId]);
+
+    sendGCM($title, $body, $topic, $pageid, $pageName);
+    $count = $stmt->rowCount();
+
+    return $count;
 }

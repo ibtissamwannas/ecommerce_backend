@@ -5,7 +5,7 @@ include '../connect.php';
 $userId = filterRequest('user_id');
 $itemsId = filterRequest('items_id');
 
-$subquery = "SELECT id FROM `cart` WHERE `cart_itemid` = $itemsId AND `cart_userid` = $userId LIMIT 1";
+$subquery = "SELECT id FROM `cart` WHERE `cart_itemid` = $itemsId AND `cart_userid` = $userId  AND `card_orders` = 0 LIMIT 1";
 $idResult = $con->query($subquery);
 $row = $idResult->fetch(PDO::FETCH_ASSOC);
 $id = $row['id'];

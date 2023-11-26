@@ -10,7 +10,7 @@ $lon = filterRequest('lon');
 $name = filterRequest('name');
 
 $data = [
-        'user_id' => $user_id,
+        'address_user_id' => $user_id,
         'city' => $city,
         'street' => $street,
         'lat' => $lat,
